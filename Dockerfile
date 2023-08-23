@@ -8,18 +8,21 @@ RUN apt-get update && apt-get install -y \
     libfreetype6-dev \
     zip \
     unzip \
+    nano \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install gd pdo pdo_mysql
 
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+RUN docker-php-ext-install pdo_mysql
+
+COPY etc/default.ini /usr/local/etc/php/conf.d/default.ini
+
+RUN groupadd -g 1000 www
+RUN useradd -u 1000 -ms /bin/bash -g www www
 
 COPY ./app .
 
-ENV COMPOSER_ALLOW_SUPERUSER=1
-
-RUN composer install --no-scripts --no-autoloader
-
-RUN composer dump-autoload
-
+COPY --chown=www:www . /var/www/
+USER www
 EXPOSE 9000
+
 CMD ["php-fpm"]
