@@ -28,7 +28,7 @@ services:
       MYSQL_USER: docmanager
       MYSQL_PASSWORD: docmanager
     ports:
-      - "3306:3306"   # Map port 3306 on host to port 3306 in the container
+      - "3306:3306"
     networks:
       - laravel-network
 networks:
