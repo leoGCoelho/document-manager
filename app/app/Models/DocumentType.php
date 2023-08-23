@@ -15,4 +15,9 @@ class DocumentType extends Model
         'name',
         'pdftemplate'
     ];
+
+    public function cols()
+    {
+        return $this->hasMany(DocumentCol::class)->orderBy('position', 'asc');
+    }
 }
