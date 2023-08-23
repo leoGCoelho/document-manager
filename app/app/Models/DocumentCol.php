@@ -19,6 +19,11 @@ class DocumentCol extends Model
 
     public function doctype()
     {
-        return $this->belongsToMany(DocumentValue::class)->withPivot('document_type_id');
+        return $this->belongsTo(DocumentValue::class)->withPivot('document_type_id');
+    }
+
+    public function values()
+    {
+        return $this->hasMany(DocumentValue::class);
     }
 }

@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\ApiController;
 use App\Http\Controllers\api\DocumentTypeController;
 use App\Http\Controllers\api\DocumentColController;
+use App\Http\Controllers\api\DocumentValueController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,4 +30,6 @@ Route::get('/documentcols/{document_id}',[DocumentColController::class, 'show'])
 Route::post('/documentcols/make/{document_id}',[DocumentColController::class, 'make']);
 Route::post('/documentcols/add/{document_id}',[DocumentColController::class, 'enqueue']);
 Route::put('/documentcols/edit/{document_id}/{position}',[DocumentColController::class, 'update']);
+
+Route::post('/documentvalues/add/{document_id}',[DocumentValueController::class, 'store']);
 

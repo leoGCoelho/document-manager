@@ -65,7 +65,13 @@ class DocumentColController extends Controller
             return $this->apiresponse("Tipo de documento não encontrado", 'error', 404);
         }
 
-        return $this->apiresponse($documentType->cols()->get()->toArray(), 'data');
+        $res_data = [
+            'name' => $documentType->name,
+            'columns' => $documentType->cols()->get()->toArray(),
+            'values' => $documentType->values()->get()->toArray()
+        ];
+
+        return $this->apiresponse($res_data, 'data');
     }
 
     public function update(Request $request, $document_id, $position)

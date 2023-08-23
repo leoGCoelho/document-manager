@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('document_cols', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('document_id');
+            $table->unsignedBigInteger('document_type_id');
             $table->foreign('document_type_id')->references('id')->on('document_types')->onDelete('cascade'); //chave estrangeira
             $table->string('name'); //nome da coluna
             $table->integer('position'); //posicao da coluna

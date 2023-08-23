@@ -20,4 +20,9 @@ class DocumentType extends Model
     {
         return $this->hasMany(DocumentCol::class)->orderBy('position', 'asc');
     }
+
+    public function values()
+    {
+        return $this->hasManyThrough(DocumentValue::class, DocumentCol::class);
+    }
 }
