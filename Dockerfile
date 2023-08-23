@@ -21,6 +21,9 @@ RUN useradd -u 1000 -ms /bin/bash -g www www
 
 COPY ./app .
 
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+RUN composer install
+
 COPY --chown=www:www . /var/www/
 USER www
 EXPOSE 9000
