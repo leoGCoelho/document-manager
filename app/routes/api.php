@@ -21,16 +21,16 @@ use App\Http\Controllers\api\DocumentValueController;
 Route::get('/', [ApiController::class, 'index']);
 Route::get('/ping', [ApiController::class, 'ping']);
 
-Route::get('/documenttypes',[DocumentTypeController::class, 'index']);
-Route::post('/documenttypes/add',[DocumentTypeController::class, 'store']);
-Route::put('/documenttypes/edit/{id}',[DocumentTypeController::class, 'update']);
-Route::delete('/documenttypes/delete/{id}',[DocumentTypeController::class, 'destroy']);
+Route::get('/document/types',[DocumentTypeController::class, 'index']);
+Route::post('/document/types/add',[DocumentTypeController::class, 'store']);
+Route::put('/document/types/edit/{id}',[DocumentTypeController::class, 'update']);
+Route::delete('/document/types/delete/{id}',[DocumentTypeController::class, 'destroy']);
 
-Route::get('/documentcols/{document_id}',[DocumentColController::class, 'show']);
-Route::post('/documentcols/make/{document_id}',[DocumentColController::class, 'make']);
-Route::post('/documentcols/add/{document_id}',[DocumentColController::class, 'enqueue']);
-Route::put('/documentcols/edit/{document_id}/{position}',[DocumentColController::class, 'update']);
+Route::get('/document/cols/{document_id}',[DocumentColController::class, 'show']);
+Route::post('/document/cols/make/{document_id}',[DocumentColController::class, 'make']);
+Route::post('/document/cols/add/{document_id}',[DocumentColController::class, 'enqueue']);
+Route::put('/document/cols/edit/{document_id}/{position}',[DocumentColController::class, 'update']);
 
-Route::post('/documentvalues/add/{document_id}',[DocumentValueController::class, 'store']);
+Route::post('/document/values/add/{document_id}',[DocumentValueController::class, 'store']);
 
 Route::get('/document/pdf/{document_name}',[DocumentColController::class, 'generatepdf']);
