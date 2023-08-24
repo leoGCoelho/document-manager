@@ -20,17 +20,6 @@ services:
       - ./../app:/var/www
     networks:
       - laravel-network
-  db:
-    image: mysql:5.7
-    environment:
-      MYSQL_ROOT_PASSWORD: s3nh4f0rt3
-      MYSQL_DATABASE: docmanager
-      MYSQL_USER: docmanager
-      MYSQL_PASSWORD: docmanager
-    ports:
-      - "3306:3306"
-    networks:
-      - laravel-network
 networks:
   laravel-network:
     driver: bridge

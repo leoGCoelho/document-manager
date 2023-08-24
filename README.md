@@ -2,6 +2,17 @@
 
 Document Management Microservice developed in Laravel and using MySQL as Database.
 
+## Getting Started
+
+1. Download the repository
+2. Duplicate */app/.env.example* changing to */app/.env* and modifying the environment variables
+2. Run *composer install* to install all packages used
+3. Run *php artisan migrate* to up all tables to the database
+4. Run *php artisan storage:link* to make the public link with storage folder
+5. Run *php artisan serve* to run the application
+
+---
+
 ## Auth Keys
 
 For sample, some APIKeys were created to explore the API functionalities
@@ -82,3 +93,7 @@ The endpoints are separated according to the user's authorizations (according to
 - During development, the **EAV (Entity-Attribute-Value)** pattern was chosen instead for the document types's dynamic columns control instead of a **JSON method**, aiming at service scalability, since large JSONs have a worse performance relational systems queries than traditional SQL (even using ORM) queries with 1xN or NXN relations.
 
 - A simple bearer authorization validation was implemented using the header **Authorization = Bearer APIKEY**. This provides a basic security level to the microservice.
+
+- The Database used is an MySQL server up in a 3rd party server.
+
+- All Docker compose scripts were implemented, but for a microservice, is recomended adapt the files to the others microservices.

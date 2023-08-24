@@ -23,7 +23,8 @@ COPY ./app .
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 RUN composer install
-RUN php artisan storage:link
+#RUN php artisan storage:link
+#RUN php artisan migrate
 
 COPY --chown=www:www . /var/www/
 USER www
