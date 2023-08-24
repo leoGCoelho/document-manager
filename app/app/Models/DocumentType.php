@@ -12,8 +12,7 @@ class DocumentType extends Model
     protected $table = 'document_types';
 
     protected $fillable = [
-        'name',
-        'pdftemplate'
+        'name'
     ];
 
     public function cols()
@@ -23,6 +22,6 @@ class DocumentType extends Model
 
     public function values()
     {
-        return $this->hasManyThrough(DocumentValue::class, DocumentCol::class);
+        return $this->hasManyThrough(DocumentValue::class, DocumentCol::class)->orderBy('created_at', 'asc');   
     }
 }

@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('document_values', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('document_col_id');
+            $table->string('uid');
             $table->foreign('document_col_id')->references('id')->on('document_cols')->onDelete('cascade'); //chave estrangeira
             $table->text('value'); //valor da coluna
             $table->timestamps();

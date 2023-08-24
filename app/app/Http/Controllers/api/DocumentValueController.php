@@ -5,6 +5,7 @@ namespace App\Http\Controllers\api;
 use App\Http\Controllers\Controller;
 use App\Models\DocumentType;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class DocumentValueController extends Controller
 {
@@ -17,6 +18,7 @@ class DocumentValueController extends Controller
             return $this->apiresponse("Tipo de documento não encontrado", 'error', 404);
         }
 
+        $uid = Str::uuid();
         $columns = $documentType->cols()->get()->toArray();
         $i=0;
         foreach ($request_data as $key => $value) {
@@ -28,7 +30,7 @@ class DocumentValueController extends Controller
                 return $this->apiresponse("Coluna '" . $key . "' não encontrada", 'error', 404);
             }
 
-            $value_data = ['value' => $value];
+            $value_data = ['uid' => $uid, 'value' => $value];
             //dd($column[$i]['id']);
 
             $documentType->cols()->find($column[$i]['id'])->values()->create($value_data);

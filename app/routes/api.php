@@ -33,3 +33,4 @@ Route::put('/documentcols/edit/{document_id}/{position}',[DocumentColController:
 
 Route::post('/documentvalues/add/{document_id}',[DocumentValueController::class, 'store']);
 
+Route::get('/document/pdf/{document_name}',[DocumentColController::class, 'generatepdf']);

@@ -4,7 +4,9 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use App\Models\DocumentType;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class DocumentColController extends Controller
 {
@@ -68,10 +70,33 @@ class DocumentColController extends Controller
         $res_data = [
             'name' => $documentType->name,
             'columns' => $documentType->cols()->get()->toArray(),
-            'values' => $documentType->values()->get()->toArray()
+            'values' => $documentType->values()->get()->groupBy('uid')->toArray()
         ];
 
         return $this->apiresponse($res_data, 'data');
+    }
+
+    public function generatepdf($document_name){
+        $documentType = DocumentType::where('name', $document_name)->first();
+        if (!$documentType) {
+            return $this->apiresponse("Tipo de documento não encontrado", 'error', 404);
+        }
+
+        $res_data = [
+            'name' => $documentType->name,
+            'columns' => $documentType->cols()->get(),
+            'values' => $documentType->values()->get()->groupBy('uid')
+        ];
+        
+        $pdf = Pdf::loadView('defaultpdf', $res_data);
+
+        $pdfName = str_replace(' ', '_', strtolower($document_name)) . '_' . strval(time()) . '.pdf';
+        $pdfPath = 'public' . DIRECTORY_SEPARATOR . 'pdfs' . DIRECTORY_SEPARATOR . $pdfName;
+        //dd(asset('storage/public' . DIRECTORY_SEPARATOR . $pdfPath));
+        Storage::put($pdfPath, $pdf->output());
+
+        return $this->apiresponse(asset('storage/pdfs/' . $pdfName), 'message');
+
     }
 
     public function update(Request $request, $document_id, $position)

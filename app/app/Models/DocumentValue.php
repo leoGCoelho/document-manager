@@ -12,6 +12,7 @@ class DocumentValue extends Model
     protected $table = 'document_values';
 
     protected $fillable = [
+        'uid',
         'value'
     ];
 
