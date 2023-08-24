@@ -11,6 +11,9 @@ class DocumentValueController extends Controller
 {
     public function store(Request $request, $document_id)
     {
+        if($request->bearerToken() != env('APIKEY_EDITOR'))
+            return response()->json('Unauthorized', 401);
+
         $request_data = $request->all();
 
         $documentType = DocumentType::findOrFail($document_id);

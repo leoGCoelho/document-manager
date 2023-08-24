@@ -12,6 +12,9 @@ class DocumentColController extends Controller
 {
     public function make(Request $request, $document_id)
     {
+        if($request->bearerToken() != env('APIKEY_EDITOR'))
+            return response()->json('Unauthorized', 401);
+
         $request_data = $request->all();
 
         if (!isset($request_data['columns'])) {
@@ -38,6 +41,9 @@ class DocumentColController extends Controller
 
     public function enqueue(Request $request, $document_id)
     {
+        if($request->bearerToken() != env('APIKEY_EDITOR'))
+            return response()->json('Unauthorized', 401);
+
         $documentType = DocumentType::findOrFail($document_id);
         if (!$documentType) {
             return $this->apiresponse("Tipo de documento não encontrado", 'error', 404);
@@ -60,8 +66,11 @@ class DocumentColController extends Controller
         return $this->apiresponse($documentCol, 'data');
     }
 
-    public function show($document_id)
+    public function show(Request $request, $document_id)
     {
+        if(($request->bearerToken() != env('APIKEY_VIEWER')) && ($request->bearerToken() != env('APIKEY_EDITOR')))
+            return response()->json('Unauthorized', 401);
+            
         $documentType = DocumentType::findOrFail($document_id);
         if (!$documentType) {
             return $this->apiresponse("Tipo de documento não encontrado", 'error', 404);
@@ -76,7 +85,10 @@ class DocumentColController extends Controller
         return $this->apiresponse($res_data, 'data');
     }
 
-    public function generatepdf($document_name){
+    public function generatepdf(Request $request, $document_name){
+        if(($request->bearerToken() != env('APIKEY_VIEWER')) && ($request->bearerToken() != env('APIKEY_EDITOR')))
+            return response()->json('Unauthorized', 401);
+
         $documentType = DocumentType::where('name', $document_name)->first();
         if (!$documentType) {
             return $this->apiresponse("Tipo de documento não encontrado", 'error', 404);
@@ -101,6 +113,9 @@ class DocumentColController extends Controller
 
     public function update(Request $request, $document_id, $position)
     {
+        if($request->bearerToken() != env('APIKEY_EDITOR'))
+            return response()->json('Unauthorized', 401);
+
         $documentType = DocumentType::findOrFail($document_id);
         if (!$documentType) {
             return $this->apiresponse("Tipo de documento não encontrado", 'error', 404);
@@ -116,10 +131,5 @@ class DocumentColController extends Controller
         $documentCol->update($request_data);
 
         return $this->apiresponse($documentCol, 'data');
-    }
-
-    public function destroy($id)
-    {
-        //
     }
 }

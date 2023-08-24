@@ -12,8 +12,11 @@ class ApiController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        if(($request->bearerToken() != env('APIKEY_VIEWER')) && ($request->bearerToken() != env('APIKEY_EDITOR')))
+            return response()->json('Unauthorized', 401);
+            
         $endpoints = [
             'GET :: /' => 'Retorna a lista de endpoints',
             'GET :: /ping' => "Verifica se o servidor está ativo, retornando a string 'pong'",
@@ -32,8 +35,11 @@ class ApiController extends Controller
         return $this->apiresponse($endpoints, 'data');
     }
 
-    public function ping()
+    public function ping(Request $request)
     {
+        if(($request->bearerToken() != env('APIKEY_VIEWER')) && ($request->bearerToken() != env('APIKEY_EDITOR')))
+            return response()->json('Unauthorized', 401);
+        
         return response()->json('pong', 200);
     }
 }
