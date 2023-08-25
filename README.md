@@ -97,3 +97,5 @@ The endpoints are separated according to the user's authorizations (according to
 - The Database used is an MySQL server up in a 3rd party server.
 
 - All Docker compose scripts were implemented, but for a microservice, is recomended adapt the files to the others microservices.
+
+- The performance was affected by the database server used for this demonstration. For the project performance validation, the usage of another database server is recommended.
